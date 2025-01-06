@@ -1,29 +1,21 @@
 package org.skypro.skyshop.product;
-import org.skypro.skyshop.basket.ProductBasket;
 
 import java.util.Objects;
 
-public class Product {
-    private String nameProduct;
-    private double priceProduct;
+public abstract class Product {
+    protected String nameProduct;
 
-    public Product(String nameProduct, double priceProduct) {
+
+    public Product(String nameProduct) {
         this.nameProduct = nameProduct;
-        this.priceProduct = priceProduct;
     }
 
     public String getNameProduct() {
         return nameProduct;
     }
 
-    public double getPriceProduct() {
-        return priceProduct;
-    }
+    public abstract double getPriceProduct();
 
-    @Override
-    public String toString() {
-        return  nameProduct  + " "+  priceProduct ;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -35,4 +27,6 @@ public class Product {
     public int hashCode() {
         return Objects.hashCode(nameProduct);
     }
+
+
 }
