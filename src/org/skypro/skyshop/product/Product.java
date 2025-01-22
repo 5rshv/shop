@@ -5,11 +5,15 @@ import org.skypro.skyshop.search.Searchable;
 import java.util.Objects;
 
 
+
 public abstract class Product implements Searchable {
     protected String nameProduct;
 
 
     public Product(String nameProduct) {
+         if (nameProduct == null || nameProduct.isBlank()) {
+           throw new IllegalArgumentException("Пустая строка");
+        }
         this.nameProduct = nameProduct;
     }
 
@@ -18,7 +22,6 @@ public abstract class Product implements Searchable {
     }
 
     public abstract double getPriceProduct();
-
 
     @Override
     public boolean equals(Object o) {
