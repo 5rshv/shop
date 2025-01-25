@@ -1,28 +1,25 @@
 package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.exception.BestResultNotFound;
+import java.util.LinkedList;
 
-public class SearchebleEngine {
-    Searchable[] searchables;
-    int count = 0;
 
-    public SearchebleEngine(int a) {
-        
-        searchables = new Searchable[a];
+public class SearchEngine {
+    LinkedList<Searchable> searchables;
+
+    public SearchEngine() {
+        searchables = new LinkedList<>();
     }
 
-    public Searchable[] search(String searchTerm) {
-        Searchable [] results = new Searchable[5];
-        int countResults = 0;
-        for (int i = 0; i < count; i++) {
-            if (searchables[i].getSearchTerm().contains(searchTerm)) {
-                results[countResults++] = searchables[i];
+    public LinkedList<Searchable> search(String searchTerm) {
+        LinkedList<Searchable> resultList = new LinkedList<>();
+        for(Searchable searchable : searchables){
+            if(searchable.getSearchTerm().contains(searchTerm)){
+                resultList.add(searchable);
             }
-            if(countResults == 5) break;
         }
-        return results;
+        return resultList;
     }
-
 
     public Searchable searchableEngine(String search) throws BestResultNotFound {
         Searchable bestSearch = null;
@@ -50,6 +47,6 @@ public class SearchebleEngine {
 
 
     public void add(Searchable searchable) {
-        searchables[count++] = searchable;
+        searchables.add(searchable);
     }
 }
