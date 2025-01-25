@@ -8,13 +8,13 @@ import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.Searchable;
-import org.skypro.skyshop.search.SearchebleEngine;
+import org.skypro.skyshop.search.SearchEngine;
+
+import java.util.LinkedList;
 
 public class app {
 
     public static void main(String[] args) throws BestResultNotFound {
-
-        ProductBasket productBasket = new ProductBasket();
 
         Product products1 = new SimpleProduct("Стул", 10);
         Product products2 = new SimpleProduct("Стул", 10000);
@@ -22,23 +22,32 @@ public class app {
         Product products4 = new DiscountedProduct("Пуфик", 1000, 10);
         Product products5 = new DiscountedProduct("Кровать", 35000, 50);
 
+        ProductBasket basket = new ProductBasket();
 
-        productBasket.addProductInBasket(products1);
-        productBasket.addProductInBasket(products2);
-        productBasket.addProductInBasket(products3);
-        productBasket.addProductInBasket(products4);
-        productBasket.addProductInBasket(products5);
+        basket.addProductInBasket(products1);
+        basket.addProductInBasket(products2);
+        basket.addProductInBasket(products3);
+        basket.addProductInBasket(products4);
+        basket.addProductInBasket(products5);
 
 
         System.out.println("Корзина: ");
-        productBasket.printBasket();
-        System.out.print("ИТОГО: ");
-        productBasket.totalPriceBasket();
-        System.out.println("Очистка корзины");
-        productBasket.delBasket();
-        productBasket.printBasket();
+        basket.printBasket();
+        System.out.println("ИТОГО: " + basket.totalPriceBasket());
 
-        SearchebleEngine searchEngine = new SearchebleEngine(10);
+
+        System.out.println("Удален товар из корзины: "+basket.delProduct("Пуфик"));
+
+        basket.printBasket();
+
+        System.out.println("Очистка корзины");
+        basket.delBasket();
+        basket.printBasket();
+        System.out.println("_________________________________________");
+
+
+
+        SearchEngine searchEngine = new SearchEngine();
 
         searchEngine.add(products1);
         searchEngine.add(products2);
@@ -59,23 +68,29 @@ public class app {
         searchEngine.add(article5);
 
 
-        Searchable[] searchableResults = searchEngine.search("PRODUCT");
-        for (Searchable result : searchableResults) {
+        System.out.println("Поиск по строке: ");
+
+
+        LinkedList<Searchable> resultList = searchEngine.search("Статья");
+        for (Searchable result : resultList) {
             if (result == null) continue;
             System.out.println(result);
         }
-        searchableResults = searchEngine.search("ARTICLE");
-        for (Searchable result : searchableResults) {
+
+        resultList = searchEngine.search("Артикул");
+        for (Searchable result : resultList) {
             if (result == null) continue;
             System.out.println(result);
         }
-        searchableResults = searchEngine.search("Кровать");
-        for (Searchable result : searchableResults) {
+
+        resultList = searchEngine.search("Кровать");
+        for (Searchable result : resultList) {
             if (result == null) continue;
             System.out.println(result);
         }
 
         System.out.println("____________________________");
+
         Searchable a = searchEngine.searchableEngine("Привет");
         System.out.println("Результат по поиску: "+ a );
 
