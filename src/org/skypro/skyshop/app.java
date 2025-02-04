@@ -11,6 +11,7 @@ import org.skypro.skyshop.search.Searchable;
 import org.skypro.skyshop.search.SearchEngine;
 
 import java.util.LinkedList;
+import java.util.Map;
 
 public class app {
 
@@ -67,26 +68,32 @@ public class app {
         searchEngine.add(article4);
         searchEngine.add(article5);
 
-
+        System.out.print("____________________________");
         System.out.println("Поиск по строке: ");
 
 
-        LinkedList<Searchable> resultList = searchEngine.search("Статья");
-        for (Searchable result : resultList) {
-            if (result == null) continue;
-            System.out.println(result);
+        Map<String, LinkedList<Searchable>> resultMap = searchEngine.search("Кресло");
+        for (Map.Entry<String, LinkedList<Searchable>> entry : resultMap.entrySet()) {
+            for(Searchable result : entry.getValue()){
+                if (result == null) continue;
+                System.out.println(result);
+            }
         }
 
-        resultList = searchEngine.search("Артикул");
-        for (Searchable result : resultList) {
-            if (result == null) continue;
-            System.out.println(result);
+        resultMap = searchEngine.search("4");
+        for (Map.Entry<String, LinkedList<Searchable>> entry : resultMap.entrySet()) {
+            for(Searchable result : entry.getValue()){
+                if (result == null) continue;
+                System.out.println(result);
+            }
         }
 
-        resultList = searchEngine.search("Кровать");
-        for (Searchable result : resultList) {
-            if (result == null) continue;
-            System.out.println(result);
+        resultMap = searchEngine.search("Кровать");
+        for (Map.Entry<String, LinkedList<Searchable>> entry : resultMap.entrySet()) {
+            for(Searchable result : entry.getValue()){
+                if (result == null) continue;
+                System.out.println(result);
+            }
         }
 
         System.out.println("____________________________");
