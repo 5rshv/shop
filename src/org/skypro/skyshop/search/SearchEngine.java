@@ -1,25 +1,26 @@
 package org.skypro.skyshop.search;
 
+import org.skypro.skyshop.comparator.*;
 import org.skypro.skyshop.exception.BestResultNotFound;
 
 import java.util.*;
 
 
 public class SearchEngine {
-    LinkedList<Searchable> searchables;
+    Set<Searchable> searchables;
 
     public SearchEngine() {
-        searchables = new LinkedList<>();
+        searchables = new HashSet<>();
     }
 
-    public Map<String, LinkedList<Searchable>> search(String searchTerm) {
-        Map<String, LinkedList<Searchable>> resultMap = new HashMap<>();
+    public Set<Searchable> search(String searchTerm) {
+        Set<Searchable> result = new TreeSet<>(new ComparatorLongestWord());
         for (Searchable searchable : searchables) {
             if (searchable.getSearchTerm().contains(searchTerm)) {
-                resultMap.computeIfAbsent(searchable.getSearchTerm(), k -> new LinkedList<>()).add(searchable);
+                result.add(searchable);
             }
         }
-        return resultMap;
+        return result;
     }
 
     public Searchable searchableEngine(String search) throws BestResultNotFound {

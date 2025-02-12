@@ -10,10 +10,9 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.Searchable;
 import org.skypro.skyshop.search.SearchEngine;
 
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.Set;
 
-public class app {
+public class App {
 
     public static void main(String[] args) throws BestResultNotFound {
 
@@ -37,7 +36,7 @@ public class app {
         System.out.println("ИТОГО: " + basket.totalPriceBasket());
 
 
-        System.out.println("Удален товар из корзины: "+basket.delProduct("Пуфик"));
+        System.out.println("Удален товар из корзины: " + basket.delProduct("Пуфик"));
 
         basket.printBasket();
 
@@ -45,7 +44,6 @@ public class app {
         basket.delBasket();
         basket.printBasket();
         System.out.println("_________________________________________");
-
 
 
         SearchEngine searchEngine = new SearchEngine();
@@ -72,28 +70,23 @@ public class app {
         System.out.println("Поиск по строке: ");
 
 
-        Map<String, LinkedList<Searchable>> resultMap = searchEngine.search("Кресло");
-        for (Map.Entry<String, LinkedList<Searchable>> entry : resultMap.entrySet()) {
-            for(Searchable result : entry.getValue()){
-                if (result == null) continue;
-                System.out.println(result);
-            }
+        Set<Searchable> resultSearch = searchEngine.search("Кресло");
+        for (Searchable result : resultSearch) {
+            if (result == null) continue;
+            System.out.println(result);
+
         }
 
-        resultMap = searchEngine.search("4");
-        for (Map.Entry<String, LinkedList<Searchable>> entry : resultMap.entrySet()) {
-            for(Searchable result : entry.getValue()){
+        resultSearch = searchEngine.search("4");
+            for(Searchable result : resultSearch){
                 if (result == null) continue;
                 System.out.println(result);
-            }
         }
 
-        resultMap = searchEngine.search("Кровать");
-        for (Map.Entry<String, LinkedList<Searchable>> entry : resultMap.entrySet()) {
-            for(Searchable result : entry.getValue()){
+        resultSearch = searchEngine.search("Кровать");
+            for(Searchable result : resultSearch){
                 if (result == null) continue;
                 System.out.println(result);
-            }
         }
 
         System.out.println("____________________________");
