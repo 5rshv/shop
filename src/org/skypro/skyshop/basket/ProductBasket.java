@@ -2,61 +2,44 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
-import java.util.Arrays;
+import java.util.*;
 
 
 public class ProductBasket {
-    private int count = 0;
+    private Map<String, LinkedList<Product>> basket;
 
-    private Product[] products = new Product[5];
-
-    public void addProductInBasket(Product product) {
-        if (count < products.length) {
-            products[count++] = product;
-            System.out.println("Добавлен продукт " + product.getNameProduct());
-        } else {
-            System.out.println("Невозможно добавить продукт!");
-        }
-
+    public ProductBasket() {
+        basket = new HashMap<>();
     }
 
-    public void totalPriceBasket() {
-        double sum = 0;
-        for (Product value : products) {
-            sum = sum + value.getPriceProduct();
-        }
-        System.out.println(sum);
+    public void addProductInBasket(Product product) {
+        basket.computeIfAbsent(product.getNameProduct(),k-> new LinkedList<>()).add(product);
+            System.out.println("Добавлен продукт " + product.getNameProduct());
+    }
+
+    public double totalPriceBasket() {
+        return  basket.values().stream().flatMap(Collection::stream).mapToDouble(Product::getPriceProduct).sum();
     }
 
     public void printBasket() {
-        if (count == 0) {
+        if (basket.isEmpty()) {
             System.out.println("Корзина пуста!");
-        } else {
-            for (Product value : products) {
-                System.out.println(value);
-            }
+        }
+        else {
+            System.out.println(basket);
         }
     }
 
-    public boolean productInBasket(String nameProduct) {
-        boolean b = false;
-        if (count == 0) {
-            System.out.println("Корзина пуста!");
-        } else {
-            for (Product value : products) {
-                if (value.getNameProduct().equals(nameProduct)) {
-                    b = true;
-                    break;
-                }
-            }
-        }
-        System.out.println(b);
-        return b;
+    public List delProduct(String name) {
+        if(basket.isEmpty() || !basket.containsKey(name)) return  new LinkedList<Product>();
+        LinkedList<Product> delProducts = basket.remove(name);
+        return delProducts;
     }
+
+
 
     public void delBasket() {
-        Arrays.fill(products, null);
-        count = 0;
+        basket.clear();
     }
 
 }
