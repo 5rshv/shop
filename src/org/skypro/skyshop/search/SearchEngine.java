@@ -4,6 +4,7 @@ import org.skypro.skyshop.comparator.*;
 import org.skypro.skyshop.exception.BestResultNotFound;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class SearchEngine {
@@ -14,13 +15,11 @@ public class SearchEngine {
     }
 
     public Set<Searchable> search(String searchTerm) {
-        Set<Searchable> result = new TreeSet<>(new ComparatorLongestWord());
-        for (Searchable searchable : searchables) {
-            if (searchable.getSearchTerm().contains(searchTerm)) {
-                result.add(searchable);
-            }
-        }
-        return result;
+
+        return
+                searchables.stream()
+                        .filter(searchable -> searchable.getSearchTerm().contains(searchTerm))
+                        .collect(Collectors.toCollection(() -> new TreeSet<>(new ComparatorLongestWord())));
     }
 
     public Searchable searchableEngine(String search) throws BestResultNotFound {

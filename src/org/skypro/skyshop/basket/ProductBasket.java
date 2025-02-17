@@ -18,7 +18,8 @@ public class ProductBasket {
     }
 
     public double totalPriceBasket() {
-        return  basket.values().stream().flatMap(Collection::stream).mapToDouble(Product::getPriceProduct).sum();
+        return  basket.values().stream().flatMap(Collection::stream)
+                    .mapToDouble(Product::getPriceProduct).sum();
     }
 
     public void printBasket() {
